@@ -51,9 +51,7 @@ func findEditDistance(a, b string) (distance int) {
 			v1[j+1] = min
 		}
 		// copy v1 to v0
-		for i, v := range v1 {
-			v0[i] = v
-		}
+		copy(v0, v1)
 	}
 	return v0[lenB]
 }
@@ -69,12 +67,10 @@ func FirstMatch(key string, list []string) (result string) {
 	var winner int
 	if ThresholdRate > 0 {
 		winner = int(ThresholdRate * float64(len(key)))
-	} else {
-		winner = -1
 	}
 	for _, str := range list {
 		distance := findEditDistance(key, str)
-		if winner < 0 || distance <= winner {
+		if winner <= 0 || distance <= winner {
 			// winner = distance
 			result = str
 			return
@@ -94,12 +90,10 @@ func Match(key string, list []string) (results []string) {
 	var winner int
 	if ThresholdRate > 0 {
 		winner = int(ThresholdRate * float64(len(key)))
-	} else {
-		winner = -1
 	}
 	for _, result := range list {
 		distance := findEditDistance(key, result)
-		if winner < 0 || distance <= winner {
+		if winner <= 0 || distance <= winner {
 			winner = distance
 			results = append(results, result)
 		}
