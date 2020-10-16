@@ -5,8 +5,11 @@ import (
 )
 
 var (
+	// ThresholdRate is the rate that allows the edit distanse less than, eg 0.4
+	//  means the edit distance less than 40%
 	ThresholdRate float64
-	CaseSensitive bool
+	// CaseInsensitive compare the edit distance in case insensitive mode
+	CaseInsensitive bool
 )
 
 // minimum returns minimum value
@@ -60,7 +63,7 @@ func FirstMatch(key string, list []string) (result string) {
 	if len(key) == 0 {
 		return
 	}
-	if !CaseSensitive {
+	if CaseInsensitive {
 		key = strings.ToLower(key)
 	}
 	var winner int
@@ -82,7 +85,10 @@ func FirstMatch(key string, list []string) (result string) {
 
 // Match returns all match of didyoumean
 func Match(key string, list []string) (results []string) {
-	if !CaseSensitive {
+	if len(key) == 0 {
+		return
+	}
+	if CaseInsensitive {
 		key = strings.ToLower(key)
 	}
 	var winner int

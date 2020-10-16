@@ -11,19 +11,19 @@ type EditDistanceTest struct {
 }
 
 type FirstMatchTest struct {
-	Key           string
-	List          []string
-	Match         string
-	ThreadRate    float64
-	CaseSensitive bool
+	Key             string
+	List            []string
+	Match           string
+	ThreadRate      float64
+	CaseInsensitive bool
 }
 
 type MatchTest struct {
-	Key           string
-	List          []string
-	Match         []string
-	ThreadRate    float64
-	CaseSensitive bool
+	Key             string
+	List            []string
+	Match           []string
+	ThreadRate      float64
+	CaseInsensitive bool
 }
 
 var (
@@ -40,57 +40,53 @@ var (
 	}
 	firstMatchTests = []FirstMatchTest{
 		{
-			Key:           "insargrm",
-			List:          []string{"facebook", "twitter", "instagram", "linkedin"},
-			Match:         "instagram",
-			ThreadRate:    0.4,
-			CaseSensitive: false,
+			Key:        "insargrm",
+			List:       []string{"facebook", "twitter", "instagram", "linkedin"},
+			Match:      "instagram",
+			ThreadRate: 0.4,
 		}, {
-			Key:           "insargrm",
-			List:          []string{"facebook", "twitter", "instagram", "linkedin"},
-			Match:         "",
-			ThreadRate:    0.3,
-			CaseSensitive: false,
+			Key:        "insargrm",
+			List:       []string{"facebook", "twitter", "instagram", "linkedin"},
+			Match:      "",
+			ThreadRate: 0.3,
 		},
 		{
-			Key:           "insarGrm",
-			List:          []string{"facebook", "twiTter", "InstaGram", "linkedin"},
-			Match:         "",
-			ThreadRate:    0.4,
-			CaseSensitive: true,
+			Key:             "insarGrm",
+			List:            []string{"facebook", "twiTter", "InstaGram", "linkedin"},
+			Match:           "",
+			ThreadRate:      0.4,
+			CaseInsensitive: false,
 		}, {
-			Key:           "insarGrm",
-			List:          []string{"facebook", "twitter", "InstaGram", "linkedin"},
-			Match:         "InstaGram",
-			ThreadRate:    0.5,
-			CaseSensitive: true,
+			Key:             "insarGrm",
+			List:            []string{"facebook", "twitter", "InstaGram", "linkedin"},
+			Match:           "InstaGram",
+			ThreadRate:      0.5,
+			CaseInsensitive: false,
 		},
 	}
 	matchTests = []MatchTest{
 		{
-			Key:           "insargrm",
-			List:          []string{"facebook", "twitter", "instagram", "linkedin"},
-			Match:         []string{"instagram"},
-			ThreadRate:    0.4,
-			CaseSensitive: false,
+			Key:        "insargrm",
+			List:       []string{"facebook", "twitter", "instagram", "linkedin"},
+			Match:      []string{"instagram"},
+			ThreadRate: 0.4,
 		}, {
-			Key:           "insargrm",
-			List:          []string{"facebook", "twitter", "instagram", "linkedin"},
-			Match:         []string{},
-			ThreadRate:    0.3,
-			CaseSensitive: false,
+			Key:        "insargrm",
+			List:       []string{"facebook", "twitter", "instagram", "linkedin"},
+			Match:      []string{},
+			ThreadRate: 0.3,
 		}, {
-			Key:           "insarGrm",
-			List:          []string{"facebook", "twiTter", "InstaGram", "linkedin"},
-			Match:         []string{},
-			ThreadRate:    0.4,
-			CaseSensitive: true,
+			Key:             "insarGrm",
+			List:            []string{"facebook", "twiTter", "InstaGram", "linkedin"},
+			Match:           []string{},
+			ThreadRate:      0.4,
+			CaseInsensitive: false,
 		}, {
-			Key:           "insarGrm",
-			List:          []string{"facebook", "twitter", "InstaGram", "linkedin"},
-			Match:         []string{"InstaGram"},
-			ThreadRate:    0.5,
-			CaseSensitive: true,
+			Key:             "insarGrm",
+			List:            []string{"facebook", "twitter", "InstaGram", "linkedin"},
+			Match:           []string{"InstaGram"},
+			ThreadRate:      0.5,
+			CaseInsensitive: false,
 		},
 	}
 )
@@ -109,7 +105,7 @@ func TestFindEditDistance(t *testing.T) {
 func TestFirstMatch(t *testing.T) {
 	for _, test := range firstMatchTests {
 		ThresholdRate = test.ThreadRate
-		CaseSensitive = test.CaseSensitive
+		CaseInsensitive = test.CaseInsensitive
 		m := FirstMatch(test.Key, test.List)
 		if m != test.Match {
 			t.Fatalf("The match should be %s but got %s", test.Match, m)
