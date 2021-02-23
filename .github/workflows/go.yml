@@ -30,9 +30,6 @@ jobs:
             dep ensure
         fi
 
-    - name: Lint
-      run: make lint && make seccheck
-
-    - name: Test
-      run: make test
+    - name: Lint and Test
+      run: make
     
