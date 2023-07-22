@@ -36,29 +36,33 @@ var (
 			A:        "Saturday",
 			B:        "Sunday",
 			Distance: 3,
+		}, {
+			A:        "台灣 Taiwan",
+			B:        "台味",
+			Distance: 7,
 		},
 	}
 	firstMatchTests = []FirstMatchTest{
 		{
 			Key:        "insargrm",
-			List:       []string{"facebook", "twitter", "instagram", "linkedin"},
+			List:       []string{"facebook", "twitter", "instagram", "linkedin", "台灣 Taiwan"},
 			Match:      "instagram",
 			ThreadRate: 0.4,
 		}, {
 			Key:        "insargrm",
-			List:       []string{"facebook", "twitter", "instagram", "linkedin"},
+			List:       []string{"facebook", "twitter", "instagram", "linkedin", "台灣 Taiwan"},
 			Match:      "",
 			ThreadRate: 0.3,
 		},
 		{
 			Key:             "insarGrm",
-			List:            []string{"facebook", "twiTter", "InstaGram", "linkedin"},
+			List:            []string{"facebook", "twiTter", "InstaGram", "linkedin", "台灣 Taiwan"},
 			Match:           "",
 			ThreadRate:      0.4,
 			CaseInsensitive: false,
 		}, {
 			Key:             "insarGrm",
-			List:            []string{"facebook", "twitter", "InstaGram", "linkedin"},
+			List:            []string{"facebook", "twitter", "InstaGram", "linkedin", "台灣 Taiwan"},
 			Match:           "InstaGram",
 			ThreadRate:      0.5,
 			CaseInsensitive: false,
@@ -67,23 +71,23 @@ var (
 	matchTests = []MatchTest{
 		{
 			Key:        "insargrm",
-			List:       []string{"facebook", "twitter", "instagram", "linkedin"},
+			List:       []string{"facebook", "twitter", "instagram", "linkedin", "台灣 Taiwan"},
 			Match:      []string{"instagram"},
 			ThreadRate: 0.4,
 		}, {
 			Key:        "insargrm",
-			List:       []string{"facebook", "twitter", "instagram", "linkedin"},
+			List:       []string{"facebook", "twitter", "instagram", "linkedin", "台灣 Taiwan"},
 			Match:      []string{},
 			ThreadRate: 0.3,
 		}, {
 			Key:             "insarGrm",
-			List:            []string{"facebook", "twiTter", "InstaGram", "linkedin"},
+			List:            []string{"facebook", "twiTter", "InstaGram", "linkedin", "台灣 Taiwan"},
 			Match:           []string{},
 			ThreadRate:      0.4,
 			CaseInsensitive: false,
 		}, {
 			Key:             "insarGrm",
-			List:            []string{"facebook", "twitter", "InstaGram", "linkedin"},
+			List:            []string{"facebook", "twitter", "InstaGram", "linkedin", "台灣 Taiwan"},
 			Match:           []string{"InstaGram"},
 			ThreadRate:      0.5,
 			CaseInsensitive: false,
@@ -99,6 +103,19 @@ func TestFindEditDistance(t *testing.T) {
 			t.Fatalf("The distance should be %d but got %d", test.Distance, d)
 		}
 	}
+}
+
+// FuzzFindEditDistance
+func FuzzFindEditDistance(f *testing.F) {
+	for _, test := range editDistanceTests {
+		f.Add(test.A, test.B)
+	}
+	f.Fuzz(func(t *testing.T, a string, b string) {
+		d := findEditDistance(a, b)
+		if d < 0 {
+			t.Errorf("distance should not be smaller than 0: %d", d)
+		}
+	})
 }
 
 // TestFirstMatch

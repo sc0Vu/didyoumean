@@ -2,11 +2,12 @@ package didyoumean
 
 import (
 	"strings"
+	"unicode/utf8"
 )
 
 var (
 	// ThresholdRate is the rate that allows the edit distanse less than, eg 0.4
-	//  means the edit distance less than 40%
+	// means the edit distance less than 40%
 	ThresholdRate float64
 	// CaseInsensitive compare the edit distance in case insensitive mode
 	CaseInsensitive bool
@@ -27,8 +28,13 @@ func minimum(values ...int) (min int) {
 // it's use Levenshtein distance, see: https://en.wikipedia.org/wiki/Levenshtein_distance for
 // more information
 func findEditDistance(a, b string) (distance int) {
-	lenA := len(a)
-	lenB := len(b)
+	if !utf8.ValidString(a) && !utf8.ValidString(b) {
+		return
+	}
+	ra := []rune(a)
+	rb := []rune(b)
+	lenA := len(ra)
+	lenB := len(rb)
 	totalLen := lenB + 1
 	// only use two rows
 	v0 := make([]int, totalLen)
@@ -53,7 +59,8 @@ func findEditDistance(a, b string) (distance int) {
 		// copy v1 to v0
 		copy(v0, v1)
 	}
-	return v0[lenB]
+	distance = v0[lenB]
+	return
 }
 
 // FirstMatch returns first match of didyoumean
