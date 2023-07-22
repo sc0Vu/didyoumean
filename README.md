@@ -1,5 +1,5 @@
 # didyoumean
-![Go](https://github.com/sc0Vu/didyoumean/workflows/Go/badge.svg)
+[![Go](https://github.com/sc0Vu/didyoumean/actions/workflows/go.yml/badge.svg)](https://github.com/sc0Vu/didyoumean/actions/workflows/go.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/sc0Vu/didyoumean)](https://goreportcard.com/report/github.com/sc0Vu/didyoumean)
 
 Didyoumean written in golang, find the similar string from the given string list. Currently it use Levenshtein distance to calculate edit distannce between two strings. See: https://en.wikipedia.org/wiki/Levenshtein_distance
